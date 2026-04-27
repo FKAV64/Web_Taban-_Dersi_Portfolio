@@ -1,0 +1,29 @@
+# Build output — re-created inside the Docker build stage, never sent to daemon
+dist/
+
+# Dev dependencies — installed fresh inside the Docker build layer
+node_modules/
+
+# Version control
+.git/
+.gitignore
+
+# Editor / OS noise
+.vscode/
+.idea/
+*.swp
+.DS_Store
+Thumbs.db
+
+# These are small config files the build actively uses — do not ignore them.
+# docker-compose.yml is not needed inside the image but is harmless to send.
+.dockerignore
+
+# Environment files — must never leak into images
+.env
+.env.*
+*.local
+
+# CI / tooling
+.github/
+.husky/

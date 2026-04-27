@@ -1,0 +1,121 @@
+---
+const experiences = [
+  {
+    role: 'Backend Engineering Projects',
+    type: 'Self-directed',
+    period: '2023 — Present',
+    current: true,
+    description:
+      'Independently designed, built, and deployed multiple backend systems applying production-grade patterns. Focused on containerization, API security, role-based access control, and microservices architecture across personal and academic projects.',
+    highlights: [
+      'Designed RESTful APIs with JWT authentication and granular RBAC',
+      'Containerized full application stacks using Docker and Docker Compose',
+      'Implemented microservices patterns using NestJS and Go',
+      'Worked with PostgreSQL schema design, indexing, and TypeORM migrations',
+      'Structured projects around clean architecture and separation of concerns',
+    ],
+  },
+  {
+    role: 'Hackathon Participant',
+    type: 'Sivas Hackathon',
+    period: '2024',
+    current: false,
+    description:
+      'Competed in a national hackathon and delivered a working logistics platform under strict time constraints. Led backend architecture decisions and the Docker-based deployment strategy for the team.',
+    highlights: [
+      'Architected and deployed a Dockerized logistics backend within the event window',
+      'Optimized container networking and inter-service communication',
+      'Made rapid architectural decisions under competitive pressure',
+      'Shipped a demo-ready product that covered real routing use cases',
+    ],
+  },
+];
+---
+
+<section id="experience" class="py-24 lg:py-32" aria-labelledby="experience-heading">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+    <!-- Section header -->
+    <div class="mb-16" data-animate>
+      <p class="text-xs font-semibold text-indigo-400 tracking-[0.2em] uppercase mb-3">Background</p>
+      <h2 id="experience-heading" class="text-3xl sm:text-4xl font-bold text-slate-100 mb-4">
+        Experience
+      </h2>
+      <p class="text-slate-400 max-w-xl leading-relaxed">
+        Real-world backend work built through projects, competition, and deliberate practice.
+      </p>
+    </div>
+
+    <!-- Timeline -->
+    <div class="relative">
+      <!-- Vertical line -->
+      <div
+        class="absolute left-0 md:left-[180px] top-0 bottom-0 w-px bg-gradient-to-b from-indigo-500/30 via-indigo-500/15 to-transparent"
+        aria-hidden="true"
+      />
+
+      <div class="space-y-10">
+        {
+          experiences.map((exp, i) => (
+            <div
+              class="relative md:grid md:grid-cols-[180px_1fr] gap-8"
+              data-animate
+              style={`transition-delay: ${i * 0.12 + 0.05}s;`}
+            >
+              <!-- Left: period -->
+              <div class="hidden md:flex flex-col items-end pr-8 pt-1">
+                <span class="text-xs font-medium text-slate-500 text-right">{exp.period}</span>
+                {exp.current && (
+                  <span class="mt-1.5 inline-flex items-center gap-1 text-[10px] font-semibold text-emerald-400">
+                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" aria-hidden="true" />
+                    Current
+                  </span>
+                )}
+              </div>
+
+              <!-- Timeline dot -->
+              <div
+                class="absolute left-0 md:left-[180px] top-1.5 w-3 h-3 rounded-full border-2 border-indigo-500 bg-[#0a0a0f] -translate-x-1/2 hidden md:block"
+                aria-hidden="true"
+              />
+
+              <!-- Right: content -->
+              <div class="pl-6 md:pl-8">
+                <!-- Mobile period -->
+                <div class="md:hidden flex items-center gap-2 mb-2">
+                  <div class="w-2.5 h-2.5 rounded-full border-2 border-indigo-500 bg-[#0a0a0f] flex-shrink-0" aria-hidden="true" />
+                  <span class="text-xs font-medium text-slate-500">{exp.period}</span>
+                  {exp.current && (
+                    <span class="inline-flex items-center gap-1 text-[10px] font-semibold text-emerald-400">
+                      <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" aria-hidden="true" />
+                      Current
+                    </span>
+                  )}
+                </div>
+
+                <div class="bg-gray-900/40 border border-white/[0.06] rounded-xl p-5 hover:border-white/10 transition-colors duration-200">
+                  <div class="flex flex-wrap items-start justify-between gap-2 mb-3">
+                    <div>
+                      <h3 class="text-base font-semibold text-slate-100">{exp.role}</h3>
+                      <p class="text-sm text-indigo-300/80 font-medium mt-0.5">{exp.type}</p>
+                    </div>
+                  </div>
+
+                  <p class="text-sm text-slate-400 leading-relaxed mb-4">{exp.description}</p>
+
+                  <ul class="space-y-2" role="list">
+                    {exp.highlights.map((point) => (
+                      <li class="flex items-start gap-2.5 text-sm text-slate-500">
+                        <span class="mt-1.5 w-1 h-1 rounded-full bg-indigo-400/60 flex-shrink-0" aria-hidden="true" />
+                        {point}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </div>
+</section>

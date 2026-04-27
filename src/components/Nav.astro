@@ -1,0 +1,132 @@
+---
+const links = [
+  { href: '#projects', label: 'Projects' },
+  { href: '#skills', label: 'Skills' },
+  { href: '#experience', label: 'Experience' },
+  { href: '#education', label: 'Education' },
+  { href: '#contact', label: 'Contact' },
+];
+---
+
+<a
+  href="#main-content"
+  class="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[100] focus:px-4 focus:py-2 focus:bg-indigo-600 focus:text-white focus:rounded-lg focus:text-sm focus:font-medium"
+>
+  Skip to main content
+</a>
+
+<header class="fixed top-0 left-0 right-0 z-50 bg-[#0a0a0f]/80 backdrop-blur-xl border-b border-white/[0.06]">
+  <nav
+    class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between h-16"
+    aria-label="Primary navigation"
+  >
+    <a
+      href="#home"
+      class="font-bold text-base text-slate-100 hover:text-indigo-400 transition-colors duration-200 tracking-tight"
+      aria-label="Back to top"
+    >
+      <span class="text-indigo-400" aria-hidden="true">&lt;</span>AVFK<span class="text-indigo-400" aria-hidden="true">/&gt;</span>
+    </a>
+
+    <div class="hidden md:flex items-center gap-7" role="list">
+      {links.map((link) => (
+        <a
+          href={link.href}
+          class="relative text-sm font-medium text-slate-400 hover:text-slate-100 transition-colors duration-200 group"
+          role="listitem"
+        >
+          {link.label}
+          <span
+            class="absolute -bottom-0.5 left-0 h-px w-0 bg-indigo-400 group-hover:w-full transition-all duration-300 rounded-full"
+            aria-hidden="true"
+          />
+        </a>
+      ))}
+    </div>
+
+    <div class="flex items-center gap-3">
+      <a
+        href="mailto:kenfackabdou0@gmail.com"
+        class="hidden md:inline-flex items-center gap-1.5 px-4 py-2 text-sm font-medium text-indigo-300 border border-indigo-500/40 rounded-lg hover:bg-indigo-500/10 hover:border-indigo-400/60 transition-all duration-200"
+      >
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
+          <rect width="20" height="16" x="2" y="4" rx="2" />
+          <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
+        </svg>
+        Hire Me
+      </a>
+
+      <button
+        id="nav-toggle"
+        class="md:hidden p-2 -mr-1 text-slate-400 hover:text-slate-100 hover:bg-white/5 rounded-md transition-all"
+        aria-label="Toggle navigation menu"
+        aria-expanded="false"
+        aria-controls="mobile-nav"
+      >
+        <svg id="icon-open" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+          <line x1="4" y1="6" x2="20" y2="6" stroke-linecap="round" />
+          <line x1="4" y1="12" x2="20" y2="12" stroke-linecap="round" />
+          <line x1="4" y1="18" x2="20" y2="18" stroke-linecap="round" />
+        </svg>
+        <svg id="icon-close" class="hidden" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+          <line x1="18" y1="6" x2="6" y2="18" stroke-linecap="round" />
+          <line x1="6" y1="6" x2="18" y2="18" stroke-linecap="round" />
+        </svg>
+      </button>
+    </div>
+  </nav>
+
+  <div
+    id="mobile-nav"
+    class="md:hidden hidden border-t border-white/[0.06] bg-[#0a0a0f]/95 backdrop-blur-xl"
+    role="region"
+    aria-label="Mobile navigation"
+  >
+    <div class="max-w-6xl mx-auto px-4 py-3 flex flex-col gap-0.5">
+      {links.map((link) => (
+        <a
+          href={link.href}
+          class="px-3 py-2.5 text-sm font-medium text-slate-400 hover:text-slate-100 hover:bg-white/5 rounded-lg transition-colors duration-150"
+        >
+          {link.label}
+        </a>
+      ))}
+      <div class="pt-2 mt-1 border-t border-white/5">
+        <a
+          href="mailto:kenfackabdou0@gmail.com"
+          class="px-3 py-2.5 text-sm font-medium text-indigo-300 hover:bg-indigo-500/10 rounded-lg transition-colors duration-150 flex items-center gap-2"
+        >
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
+            <rect width="20" height="16" x="2" y="4" rx="2" />
+            <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
+          </svg>
+          Hire Me
+        </a>
+      </div>
+    </div>
+  </div>
+</header>
+
+<script>
+  const toggle = document.getElementById('nav-toggle');
+  const mobileNav = document.getElementById('mobile-nav');
+  const iconOpen = document.getElementById('icon-open');
+  const iconClose = document.getElementById('icon-close');
+
+  toggle?.addEventListener('click', () => {
+    const isOpen = !mobileNav?.classList.contains('hidden');
+    mobileNav?.classList.toggle('hidden');
+    toggle.setAttribute('aria-expanded', String(!isOpen));
+    iconOpen?.classList.toggle('hidden', !isOpen);
+    iconClose?.classList.toggle('hidden', isOpen);
+  });
+
+  mobileNav?.querySelectorAll('a').forEach((link) => {
+    link.addEventListener('click', () => {
+      mobileNav.classList.add('hidden');
+      toggle?.setAttribute('aria-expanded', 'false');
+      iconOpen?.classList.remove('hidden');
+      iconClose?.classList.add('hidden');
+    });
+  });
+</script>

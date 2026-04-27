@@ -1,0 +1,85 @@
+---
+const hobbies = [
+  {
+    title: 'Turkish Language',
+    description:
+      'Actively learning Turkish beyond classroom context to build stronger academic and professional connections in Turkey. Practicing through daily immersion, language apps, and conversations with native speakers.',
+    tags: ['Language Learning', 'Communication', 'Culture'],
+    iconPath: `M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zm0 0c-2.5 0-4.5 5-4.5 10s2 10 4.5 10 4.5-5 4.5-10S14.5 2 12 2zM2 12h20`,
+    borderColor: 'border-indigo-500/15',
+    dotColor: 'bg-indigo-400',
+    tagBase: 'bg-indigo-500/10 text-indigo-300 border border-indigo-500/20',
+    iconColor: '#818cf8',
+    iconBg: 'bg-indigo-500/10 border-indigo-500/20',
+  },
+  {
+    title: 'Cryptocurrency Markets',
+    description:
+      'Analyzing market trends, studying DeFi protocols, and tracking blockchain developments as a long-term interest. Interested in the intersection of cryptographic principles, decentralized finance, and market dynamics.',
+    tags: ['DeFi', 'Blockchain', 'Market Analysis'],
+    iconPath: `M12 2v20M17 5H9.5a3.5 3.5 0 1 0 0 7h5a3.5 3.5 0 1 1 0 7H6`,
+    borderColor: 'border-cyan-500/15',
+    dotColor: 'bg-cyan-400',
+    tagBase: 'bg-cyan-500/10 text-cyan-300 border border-cyan-500/20',
+    iconColor: '#22d3ee',
+    iconBg: 'bg-cyan-500/10 border-cyan-500/20',
+  },
+  {
+    title: 'Cybersecurity Research',
+    description:
+      'Exploring CTF challenges, studying attack vectors, and deepening knowledge of defensive security. Particularly interested in container hardening, network threat modeling, and applying OWASP principles to backend systems.',
+    tags: ['CTF', 'OWASP', 'Threat Modeling', 'Container Security'],
+    iconPath: `M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z`,
+    borderColor: 'border-violet-500/15',
+    dotColor: 'bg-violet-400',
+    tagBase: 'bg-violet-500/10 text-violet-300 border border-violet-500/20',
+    iconColor: '#a78bfa',
+    iconBg: 'bg-violet-500/10 border-violet-500/20',
+  },
+];
+---
+
+<section id="hobbies" class="py-24 lg:py-32" aria-labelledby="hobbies-heading">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+    <!-- Section header -->
+    <div class="mb-16" data-animate>
+      <p class="text-xs font-semibold text-indigo-400 tracking-[0.2em] uppercase mb-3">Beyond Code</p>
+      <h2 id="hobbies-heading" class="text-3xl sm:text-4xl font-bold text-slate-100 mb-4">
+        Interests &amp; Hobbies
+      </h2>
+      <p class="text-slate-400 max-w-xl leading-relaxed">
+        What I pursue outside of backend engineering — each one feeding back into how I think about problems.
+      </p>
+    </div>
+
+    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+      {
+        hobbies.map((hobby, i) => (
+          <div
+            class={`group bg-gray-900/40 border ${hobby.borderColor} rounded-2xl p-6 hover:bg-gray-900/60 hover:-translate-y-0.5 transition-all duration-300`}
+            data-animate
+            style={`transition-delay: ${i * 0.1 + 0.05}s;`}
+          >
+            <!-- Icon -->
+            <div class={`w-10 h-10 rounded-xl border ${hobby.iconBg} flex items-center justify-center mb-5`} aria-hidden="true">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke={hobby.iconColor} stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+                <path d={hobby.iconPath} />
+              </svg>
+            </div>
+
+            <h3 class="text-base font-semibold text-slate-100 mb-2">{hobby.title}</h3>
+            <p class="text-sm text-slate-500 leading-[1.75] mb-4">{hobby.description}</p>
+
+            <div class="flex flex-wrap gap-1.5">
+              {hobby.tags.map((tag) => (
+                <span class={`px-2 py-0.5 text-[11px] font-medium rounded-md ${hobby.tagBase}`}>
+                  {tag}
+                </span>
+              ))}
+            </div>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</section>
