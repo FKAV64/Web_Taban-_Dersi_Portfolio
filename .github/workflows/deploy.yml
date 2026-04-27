@@ -6,7 +6,7 @@
 #    2. build     — Astro lint/type-check + Astro build + Docker image scan
 #    3. push      — Build & push to GHCR (main branch only)
 #
-─────────────────────────────────────────────────────────────────────────────
+#─────────────────────────────────────────────────────────────────────────────
 
 name: CI/CD
 
