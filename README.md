@@ -4,7 +4,13 @@
 
 Personal portfolio of **Abdou Valerio Foma Kenfack** — Computer Engineering student at Bitlis Eren University and backend developer focused on containerized systems.
 
-Built with **Astro 4** (static site generation), served by **nginx**, containerized with **Docker**, and deployed to **Fly.io** through a DevSecOps-hardened GitHub Actions pipeline.
+Built with **Astro 4** (static site generation), served by **nginx**, and containerized with **Docker**. The CI/CD pipeline runs a DevSecOps quality gate on every push and publishes the image to GHCR. Fly.io deployment is configured and ready (`fly.toml` included).
+
+> **Run it locally right now:**
+> ```bash
+> docker compose up --build
+> ```
+> Then open **http://localhost:8080**
 
 ---
 
@@ -69,33 +75,36 @@ flowchart TD
 
 ---
 
-## Local Setup
+## Running Locally
 
-### Option A — Docker Compose (recommended)
+### Option A — Docker Compose ✅ recommended
 
 Requires: [Docker Desktop](https://www.docker.com/products/docker-desktop/)
 
 ```bash
-# Clone
+# 1. Clone the repository
 git clone https://github.com/FKAV64/Web_Taban-_Dersi_Portfolio.git
 cd Web_Taban-_Dersi_Portfolio
 
-# Build and start
+# 2. Build the image and start the container
 docker compose up --build
 
-# Open http://localhost:8080
+# 3. Open your browser
+#    → http://localhost:8080
 ```
 
-The container runs in hardened mode (`read_only`, dropped capabilities, tmpfs mounts). Use `docker compose down` to stop.
+This is the closest environment to production — nginx serves the compiled Astro output inside a hardened container (`read_only` filesystem, dropped Linux capabilities, tmpfs mounts). Stop with `docker compose down`.
 
-### Option B — Node dev server
+### Option B — Astro dev server
 
 Requires: Node 20+
 
 ```bash
 npm install
-npm run dev        # http://localhost:4321
+npm run dev        # → http://localhost:4321
 ```
+
+Hot-reloading enabled. Use this when actively editing components.
 
 ---
 
@@ -132,27 +141,27 @@ ghcr.io/fkav64/avfk-portfolio:sha-<short-sha>
 
 ---
 
-## Fly.io Deployment
+## Fly.io Deployment *(configured — not yet live)*
 
-Prerequisites: [flyctl](https://fly.io/docs/hands-on/install-flyctl/) installed and authenticated.
+`fly.toml` is included and fully configured. When ready to deploy:
+
+Prerequisites: [flyctl](https://fly.io/docs/hands-on/install-flyctl/) installed and authenticated (`fly auth login`).
 
 ```bash
-# First deploy — creates the app on Fly.io
-fly launch --no-deploy   # review fly.toml, then:
-fly deploy
+# First deploy — registers the app name and provisions the VM
+fly launch --no-deploy   # reads fly.toml; confirm the app name
+fly deploy               # builds from Dockerfile and goes live
 
-# Subsequent deploys (also handled automatically by the CI/CD push job)
-fly deploy
+# Once deployed, the site will be available at:
+# → https://avfk-portfolio.fly.dev
 
-# Useful commands
+# Day-to-day commands
 fly logs          # tail live logs
-fly status        # machine health and region
-fly ssh console   # shell into the running VM
+fly status        # machine health and assigned region
+fly ssh console   # open a shell inside the running VM
 ```
 
-The app is configured to **scale to zero** when idle (`auto_stop_machines = true`, `min_machines_running = 0`), which keeps it within Fly.io's free allowance for a portfolio.
-
-The `/health` endpoint (`{"status":"ok"}`) is used as the liveness probe by Fly.io, Docker Compose, and the Dockerfile `HEALTHCHECK`.
+The app scales to zero when idle (`auto_stop_machines = true`, `min_machines_running = 0`), staying within Fly.io's free allowance. The `/health` endpoint (`{"status":"ok"}`) serves as the liveness probe for Fly.io, Docker Compose, and the Dockerfile `HEALTHCHECK`.
 
 ---
 
