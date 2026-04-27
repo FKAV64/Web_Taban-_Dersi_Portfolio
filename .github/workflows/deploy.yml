@@ -140,7 +140,7 @@ jobs:
       # Scans the just-built image for OS-level and language CVEs.
       # Fails the job on any CRITICAL finding (same policy as FS scan).
       - name: Trivy — image scan
-        uses: aquasecurity/trivy-action@0.24.0
+        uses: aquasecurity/trivy-action@master
         with:
           image-ref:      avfk-portfolio:${{ github.sha }}
           severity:       CRITICAL
