@@ -1,0 +1,42 @@
+# fly.toml — Fly.io deployment configuration for avfk-portfolio
+#
+# Deploy:  fly deploy
+# Logs:    fly logs
+# Status:  fly status
+# SSH:     fly ssh console
+
+app            = "avfk-portfolio"
+primary_region = "ams"          # Amsterdam — closest to Turkey with good latency
+
+[build]
+  dockerfile = "Dockerfile"     # multi-stage: node:20-alpine build → nginx:alpine serve
+
+# ── HTTP service ──────────────────────────────────────────────────────────────
+# Fly's edge proxy terminates TLS and forwards plain HTTP to the container.
+# internal_port must match EXPOSE in the Dockerfile (port 80 / nginx).
+[http_service]
+  internal_port        = 80
+  force_https          = true   # redirect all HTTP → HTTPS at the edge
+  auto_stop_machines   = true   # scale to zero when idle (free-tier friendly)
+  auto_start_machines  = true   # cold-start on first request
+  min_machines_running = 0
+
+  # ── Health check ────────────────────────────────────────────────────────────
+  # Mirrors the /health endpoint defined in nginx.conf.
+  # Fly waits for 3 consecutive 200 responses before marking the machine live.
+  [http_service.checks]
+    [http_service.checks.alive]
+      grace_period = "10s"
+      interval     = "30s"
+      method       = "GET"
+      path         = "/health"
+      protocol     = "http"
+      timeout      = "5s"
+
+# ── VM sizing ─────────────────────────────────────────────────────────────────
+# A static nginx serving a portfolio is extremely light.
+# shared-cpu-1x + 256 MB is more than sufficient and stays on the free plan.
+[[vm]]
+  cpu_kind = "shared"
+  cpus     = 1
+  memory   = "256mb"
