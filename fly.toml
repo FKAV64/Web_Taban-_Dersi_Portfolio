@@ -24,14 +24,12 @@ primary_region = "ams"          # Amsterdam — closest to Turkey with good late
   # ── Health check ────────────────────────────────────────────────────────────
   # Mirrors the /health endpoint defined in nginx.conf.
   # Fly waits for 3 consecutive 200 responses before marking the machine live.
-  [http_service.checks]
-    [http_service.checks.alive]
-      grace_period = "10s"
-      interval     = "30s"
-      method       = "GET"
-      path         = "/health"
-      protocol     = "http"
-      timeout      = "5s"
+  [[http_service.checks]]
+  grace_period = "10s"
+  interval = "15s"
+  method = "GET"
+  path = "/health"
+  timeout = "2s"
 
 # ── VM sizing ─────────────────────────────────────────────────────────────────
 # A static nginx serving a portfolio is extremely light.
